@@ -7,7 +7,7 @@ const { renderNoteForm, createNewNote, renderNotes,
 // new note
 router.get('/notes/add', renderNoteForm);
 
-router.post('/notes/add',createNewNote);
+router.post('/notes/new',createNewNote);
 
 // Get all notes
 router.get('/notes', renderNotes);
