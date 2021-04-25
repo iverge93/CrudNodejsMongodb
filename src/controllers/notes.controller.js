@@ -10,28 +10,32 @@ notesCtrl.createNewNote = async (req, res) => {
 
     const newNote = new Note({title, description});
     await newNote.save();
-    res.send('note created');
+    res.redirect('/notes');
 };
 
 notesCtrl.renderNotes = async (req, res) => {
 
-    /* find() method added to solve the problem: 
+    /* lean() method added to solve the problem: 
         Handlebars: Access has been denied to resolve the property
     */
     const notes = await Note.find().lean();
-
     res.render('notes/all-notes', { notes });
 };
 
-notesCtrl.renderEditForm = (req, res) => {
-    res.send('edit notes');
+notesCtrl.renderEditForm = async (req, res) => {
+    const note = await Note.findById(req.params.id).lean();
+    res.render('notes/edit-notes', {note});
 };
 
-notesCtrl.updateNote = (req, res) => {
-    res.send('update note');
+notesCtrl.updateNote = async (req, res) => {
+    const { title, description } = req.body;
+    await Note.findByIdAndUpdate(req.params.id, {title, description})
+    res.redirect('/notes');
 };
 
-notesCtrl.deleteNote = (req, res) => {
-    res.send('delete note');
+notesCtrl.deleteNote = async (req, res) => {
+    await Note.findByIdAndDelete(req.params.id);
+    res.redirect('/notes');
 };
+
 module.exports = notesCtrl;

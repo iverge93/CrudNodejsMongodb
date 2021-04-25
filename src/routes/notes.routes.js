@@ -18,6 +18,6 @@ router.get('/notes/edit/:id', renderEditForm);
 router.put('/notes/edit/:id', updateNote);
 
 // Delete notes
-router.delete('notes/delete/:id', deleteNote);
+router.delete('/notes/delete/:id', deleteNote);
 
 module.exports = router;
