@@ -1,15 +1,26 @@
+const Note = require('../models/Note');
 const notesCtrl = {};
 
 notesCtrl.renderNoteForm = (req, res) =>{
     res.render('notes/new-note');
 };
 
-notesCtrl.createNewNote = (req, res) => {
+notesCtrl.createNewNote = async (req, res) => {
+    const {title, description} = req.body;
+
+    const newNote = new Note({title, description});
+    await newNote.save();
     res.send('note created');
 };
 
-notesCtrl.renderNotes = (req, res) => {
-    res.send('render notes');
+notesCtrl.renderNotes = async (req, res) => {
+
+    /* find() method added to solve the problem: 
+        Handlebars: Access has been denied to resolve the property
+    */
+    const notes = await Note.find().lean();
+
+    res.render('notes/all-notes', { notes });
 };
 
 notesCtrl.renderEditForm = (req, res) => {
