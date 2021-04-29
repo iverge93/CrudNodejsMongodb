@@ -1,6 +1,6 @@
 {
   "name": "crud-nodejs-mongodb",
-  "version": "1.9.0",
+  "version": "1.11.0",
   "description": "It is a CRUD application created with node.js and mongodb",
   "main": "index.js",
   "scripts": {
